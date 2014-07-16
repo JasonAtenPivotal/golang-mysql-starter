@@ -43,8 +43,8 @@ func main() {
 	create(db)
 
 	fmt.Printf("deleting all rows in table 'one', just for demonstration purposes.\n")
-	del(db)	
-	
+	del(db)
+
 	fmt.Printf("reading and writing inside a transaction.\n")
 	transact(db)
 
@@ -105,7 +105,7 @@ func write(db *sql.DB, val int) {
 }
 
 func del(db *sql.DB) {
-	_, err := db.Exec("DELETE FROM one") 	
+	_, err := db.Exec("DELETE FROM one")
 	if err != nil {
 		panic(err)
 	}
@@ -119,14 +119,14 @@ func transact(db *sql.DB) {
 	}
 
 	val := read(db)
-	write(db, val + 1)
+	write(db, val+1)
 
 	tx.Commit()
-	tx.Rollback()
+	//tx.Rollback()
 }
 
 func create(db *sql.DB) {
-	_, err := db.Exec("create table one (id bigint not null auto_increment primary key, a varchar(255), b int, tm timestamp)") 	
+	_, err := db.Exec("create table one (id bigint not null auto_increment primary key, a varchar(255), b int, tm timestamp)")
 	if err != nil {
 		panic(err)
 	}
@@ -134,8 +134,8 @@ func create(db *sql.DB) {
 
 func drop(db *sql.DB) {
 	db.Exec("drop table one")
-//	_, err := db.Exec("drop table one")
-//	if err != nil {
-//		panic(err)
-//	}
+	//	_, err := db.Exec("drop table one")
+	//	if err != nil {
+	//		panic(err)
+	//	}
 }
